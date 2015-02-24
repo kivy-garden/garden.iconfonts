@@ -17,18 +17,18 @@ if __name__ == '__main__':
 BoxLayout:
     Button:
         markup: True
-        text: "%s"%(icon('icon-comment'))
+        text: "%s"%(icon('icon-comment', 32))
     Button:
         markup: True
-        text: "%s"%(icon('icon-emo-happy', 50))
+        text: "%s"%(icon('icon-emo-happy', 64))
 
     Button:
         markup: True
-        text: "%s Text"%(icon('icon-plus-circled', 22))
+        text: "%s Text"%(icon('icon-plus-circled', 24))
 
     Button:
         markup: True
-        text: "%s"%(icon('icon-doc-text-inv', 22, 'ff3333'))
+        text: "%s"%(icon('icon-doc-text-inv', 64, 'ff3333'))
 
     Label:
         id: _anim
