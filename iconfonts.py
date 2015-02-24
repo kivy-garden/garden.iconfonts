@@ -57,7 +57,6 @@ def _parse(data):
     start = [x for x in re.finditer(pat_start, data)][0].start()
     data = data[start:]  # crop
     data = data.replace("\\", '0x')  # replace unicodes
-
     # Find keys
     pat_keys = re.compile('[a-zA-Z0-9_-]+:before')
     keys = []
@@ -80,7 +79,11 @@ def _parse(data):
         v = v.replace('content:', '')
         for j, lnum in enumerate(lines):
             if lnum <= lineno:
-                values.append(int(v.replace('content:', ''), 0))
+                try:
+                    val = int(v.replace('content:', ''), 0)
+                except:
+                    val = 0
+                values.append(val)
             else:
                 break
         [lines.pop(0) for x in lines[0:j]]  # pop assigned lines
