@@ -51,6 +51,7 @@ def create_fontdict_file(css_fname, output_fname):
 
 
 def _parse(data):
+    # This is probably a bad way to get the rules. but works.
     # Find start line where icons rules start
     pat_start = re.compile('}.+content:', re.DOTALL)
     start = [x for x in re.finditer(pat_start, data)][0].start()
