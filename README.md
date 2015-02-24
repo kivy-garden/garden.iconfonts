@@ -51,4 +51,5 @@ LICENSE
 
 MIT (except sample font that I got from http://fontello.com)
 
+*Screenshot*
 ![Screenshot](https://github.com/jeysonmc/garden.iconfonts/blob/master/screenshot.png "Scrennshot")
