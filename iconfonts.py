@@ -5,14 +5,26 @@ from collections import OrderedDict
 _register = OrderedDict()
 
 def register(name, ttf_fname, fontd_fname):
+    """Register an Iconfont
+    :param name: font name identifier.
+    :param ttf_fname: ttf filename (path)
+    :param fontd_fname: fontdic filename. (See create_fontdic)
+    """
     with open(fontd_fname, 'r') as f:
         fontd = json.loads(f.read())
         _register[name] = ttf_fname, fontd_fname, fontd
 
-def icon(name, size=None, color=None, font_name=None):
+def icon(code, size=None, color=None, font_name=None):
+    """ Gets an icon from iconfont.
+    :param code: Icon codename (ex: 'icon-name')
+    :param size: Icon size
+    :param color: Icon color
+    :param font_name: Registered font name. If None first one is used.
+    :returns: icon text (with markups)
+    """
     font = _register.keys()[0] if font_name is None else font_name
     font_data = _register[font]
-    s = "[font=%s]%s[/font]"% (font_data[0], unichr(font_data[2][name]))
+    s = "[font=%s]%s[/font]"% (font_data[0], unichr(font_data[2][code]))
     if size is not None:
         s = "[size=%s]%s[/size]"%(size, s)
     if color is not None:
@@ -20,8 +32,12 @@ def icon(name, size=None, color=None, font_name=None):
 
     return s
 
-
 def create_fontdict_file(css_fname, output_fname):
+    """Create a font dictionary file. Basically creates a dictionary with icon_code: unicode_value entries
+    obtained from a CSS file.
+    :param css_fname: CSS filename where font's rules are declared.
+    :param output_fname: Fontd file destination
+    """
     with open(css_fname,'r') as f:
         data = f.read()
         res = _parse(data)
