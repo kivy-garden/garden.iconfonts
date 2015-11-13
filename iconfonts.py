@@ -51,44 +51,23 @@ def create_fontdict_file(css_fname, output_fname):
 
 
 def _parse(data):
-    # This is probably a bad way to get the rules. but works.
-    # Find start line where icons rules start
+    # find start index where icons rules start
     pat_start = re.compile('}.+content:', re.DOTALL)
-    start = [x for x in re.finditer(pat_start, data)][0].start()
-    data = data[start:]  # crop
+    rules_start = [x for x in re.finditer(pat_start, data)][0].start()
+    data = data[rules_start:]  # crop data
     data = data.replace("\\", '0x')  # replace unicodes
-    # Find keys
+    data = data.replace("'", '"')  # replace quotes
+    # iterate rule indices and extract value
     pat_keys = re.compile('[a-zA-Z0-9_-]+:before')
-    keys = []
-    lines = []
+    res = dict()
     for i in re.finditer(pat_keys, data):
-        lineno = data.count("\n", 0, i.start()) + 1
-        lines.append(lineno)  # save line position
-        keys.append(i.group().replace(':before', ''))
-
-    # Find values (unicode value) and save it to values list as many times as
-    # needed
-    values = []
-    QUOTE = '"'
-    data = data.replace("'", '"')
-    pat_values = re.compile('content:.+')
-
-    for i in re.finditer(pat_values, data):
-        lineno = data.count("\n", 0, i.start()) + 1
-        v = i.group().split(QUOTE)[1]
-        v = v.replace('content:', '')
-        for j, lnum in enumerate(lines):
-            if lnum <= lineno:
-                try:
-                    val = int(v.replace('content:', ''), 0)
-                except:
-                    val = 0
-                values.append(val)
-            else:
-                break
-        [lines.pop(0) for x in lines[0:j]]  # pop assigned lines
-
-    # Create dict
-    res = dict(zip(keys, values))
-
+        start = i.start()
+        end = data.find('}', start)
+        key = i.group().replace(':before', '')
+        try:
+            value = int(data[start:end].split('"')[1], 0)
+        except (IndexError, ValueError):
+            continue
+        res[key] = value
     return res
+
