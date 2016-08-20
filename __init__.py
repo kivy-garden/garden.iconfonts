@@ -7,10 +7,12 @@ widgets.
 """
 from iconfonts import *
 
+
 if __name__ == '__main__':
     from kivy.lang import Builder
     from kivy.base import runTouchApp
     from kivy.animation import Animation
+    from os.path import join, dirname
 
     kv = """
 #: import icon iconfonts.icon
@@ -49,7 +51,8 @@ BoxLayout:
             PopMatrix
     """
 
-    register('default_font', 'iconfont_sample.ttf', 'iconfont_sample.fontd')
+    register('default_font', 'iconfont_sample.ttf',
+             join(dirname(__file__), 'iconfont_sample.fontd'))
 
     root = Builder.load_string(kv)
     an = Animation(p=360, duration=2) + Animation(p=0, duration=0)

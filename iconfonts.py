@@ -1,8 +1,12 @@
 import re
 import json
 from collections import OrderedDict
+from kivy.compat import PY2
 
 _register = OrderedDict()
+
+if not PY2:
+    unichr = chr
 
 
 def register(name, ttf_fname, fontd_fname):
@@ -24,7 +28,7 @@ def icon(code, size=None, color=None, font_name=None):
     :param font_name: Registered font name. If None first one is used.
     :returns: icon text (with markups)
     """
-    font = _register.keys()[0] if font_name is None else font_name
+    font = list(_register.keys())[0] if font_name is None else font_name
     font_data = _register[font]
     s = "[font=%s]%s[/font]" % (font_data[0], unichr(font_data[2][code]))
     if size is not None:
