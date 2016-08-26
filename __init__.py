@@ -5,7 +5,7 @@ Kivy-iconfonts
 Simple helper functions to make easier to use icon fonts in Labels and derived
 widgets.
 """
-from iconfonts import *
+from .iconfonts import *
 
 
 if __name__ == '__main__':
