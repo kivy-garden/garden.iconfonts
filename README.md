@@ -18,7 +18,7 @@ In your main.py register your font:
 
 In your kv file or string:
 ```yaml
-    #: import icon garden.iconfonts.icon
+    #: import icon kivy.garden.iconfonts.icon
     Button:
         markup: True # Always turn markup on
         text: "%s"%(icon('icon-comment'))
@@ -36,7 +36,7 @@ A .fontd file is just a python dictionary filled with icon_code: unicode_value e
 2. Copy both the TTF and CSS files (fonts/fontawesome-webfont.ttf and css/font-awesome.css) to your project
 3. Create and execute a python script to generate your fontd file:
 ```python
-inconfonts.create_fontdict_file('font-awesome.css', 'font-awesome.fontd')
+iconfonts.create_fontdict_file('font-awesome.css', 'font-awesome.fontd')
 ```
 4. If everything went well your font dictionary file exists. You can delete the css file (font-awesome.css)
 
